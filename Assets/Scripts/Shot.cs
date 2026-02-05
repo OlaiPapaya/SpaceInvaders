@@ -26,11 +26,11 @@ public class Shot : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D other)
     {
-        Destroy(gameObject);
         // If the found object is not one we want to damage, we ignore it:
         if (other.CompareTag("Player") && !damagePlayer ||
             other.CompareTag("Enemy") && !damageEnemies ||
             other.CompareTag("Building") && !damageBuildings) return;
+        Destroy(gameObject);
 
         // If an object can be damaged, it will have the interface 'Entity':
         Entity targetEntity = other.GetComponent<Entity>();

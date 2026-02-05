@@ -332,9 +332,9 @@ TextureImporter:
       name: Sprites_0
       rect:
         serializedVersion: 2
-        x: 1
+        x: 2
         y: 119
-        width: 16
+        width: 15
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -354,9 +354,9 @@ TextureImporter:
       name: Sprites_1
       rect:
         serializedVersion: 2
-        x: 19
+        x: 20
         y: 119
-        width: 16
+        width: 15
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -420,9 +420,9 @@ TextureImporter:
       name: Sprites_4
       rect:
         serializedVersion: 2
-        x: 1
+        x: 2
         y: 109
-        width: 16
+        width: 15
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -442,9 +442,9 @@ TextureImporter:
       name: Sprites_5
       rect:
         serializedVersion: 2
-        x: 19
+        x: 20
         y: 109
-        width: 16
+        width: 15
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
