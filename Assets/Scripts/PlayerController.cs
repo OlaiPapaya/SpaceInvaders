@@ -11,20 +11,24 @@ public class PlayerController : MonoBehaviour, Entity
         _moveSpeed,
         _acceleration;
 
+    Vector3 _startingPos;
+
     float _currentMovement;
 
     bool _inLeftCorner, _inRightCorner;
 
     InputFrame _inputFrame;
 
-    void Start()
+    void Awake()
     {
         _input = new();
         _input.Player.Enable();
+        _startingPos = transform.position;
     }
 
     void Update()
     {
+        if (GameManager.instance.GameOver) return;
         GetInput();
         ApplyMovement();
         Shoot();
@@ -60,7 +64,9 @@ public class PlayerController : MonoBehaviour, Entity
 
     void Entity.Damage()
     {
-
+        GameManager.instance.LoseLife();
+        if (!GameManager.instance.GameOver) transform.position = _startingPos;
+        else Destroy(gameObject);
     }
 
     private void OnTriggerEnter2D(Collider2D other)

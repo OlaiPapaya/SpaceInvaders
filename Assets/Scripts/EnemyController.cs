@@ -18,8 +18,16 @@ public class EnemyController : MonoBehaviour, Entity
         _enemyGroupScript.DirChange();
     }
 
+    private void Update()
+    {
+        // If the enemies arrive to the end and the game isn't over yet, the player loses:
+        if (transform.position.y <= GameManager.instance._enemyWinYposition &&
+            !GameManager.instance.GameOver) GameManager.instance.EnemiesArrived();
+    }
+
     void Entity.Damage()
     {
-        
+        _enemyGroupScript.EnemyDied(); // Increase the speed of the group of enemies
+        Destroy(gameObject);
     }
 }
