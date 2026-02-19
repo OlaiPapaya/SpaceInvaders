@@ -332,9 +332,9 @@ TextureImporter:
       name: Sprites_0
       rect:
         serializedVersion: 2
-        x: 2
+        x: 4
         y: 119
-        width: 15
+        width: 10
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}
@@ -420,9 +420,9 @@ TextureImporter:
       name: Sprites_4
       rect:
         serializedVersion: 2
-        x: 2
+        x: 4
         y: 109
-        width: 15
+        width: 10
         height: 8
       alignment: 0
       pivot: {x: 0.5, y: 0.5}

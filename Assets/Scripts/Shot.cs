@@ -21,6 +21,7 @@ public class Shot : MonoBehaviour
 
     void Update()
     {
+        // Moving in the shoot's direction
         transform.position += movementDir.normalized * speed * Time.deltaTime;
     }
 
