@@ -15,14 +15,29 @@ public class GameManager : MonoBehaviour
         _winPanel,
         _losePanel;
 
+    [SerializeField] RectTransform
+        _specialAbilityCounter;
+
+    [SerializeField] int
+        _pointsToSpecialAttack;
+
+    [SerializeField] float
+        _abilityFillerMinValue;
+
     private bool _gameOver;
     public bool GameOver { get => _gameOver; }
 
-    public float _enemyWinYposition;
+    [SerializeField] float
+        _enemyWinYposition;
+
+    float _abilityFillerMaxValue;
+    public float EnemyWinYposition { get { return _enemyWinYposition; } }
 
     [SerializeField] private ushort _startLifes;
     private ushort _lifes;
-    private int _points;
+    private int _points, _abilityPoints;
+    public int Points { get { return _points; } }
+    public bool CanUseSpecialAttack => _abilityPoints >= _pointsToSpecialAttack;
 
     void Awake()
     {
@@ -34,6 +49,13 @@ public class GameManager : MonoBehaviour
         _lifes = _startLifes;
     }
 
+    private void Start()
+    {
+        if (_specialAbilityCounter != null) _abilityFillerMaxValue = _specialAbilityCounter.offsetMax.y;
+        Debug.Log(_abilityFillerMaxValue);
+        UpdateAbilityCounter();
+    }
+
     // Basic Game Functions:
 
     public void LoseLife()
@@ -43,10 +65,30 @@ public class GameManager : MonoBehaviour
         if (_lifes <= 0) PlayerDied();
     }
 
-    public void AddPoints(int addedPoints)
+    public void AddPoints(int addedPoints, bool pointsAffectAbility)
     {
         _points += addedPoints;
+        if (pointsAffectAbility)
+        {
+            _abilityPoints += addedPoints;
+            UpdateAbilityCounter();
+        }
         _pointsText.text = _points.ToString();
+    }
+
+    public void AbilityUsed()
+    {
+        _abilityPoints = 0;
+        UpdateAbilityCounter();
+    }
+
+    void UpdateAbilityCounter()
+    {
+        if (_specialAbilityCounter == null) return;
+        float lerpVal = Mathf.Clamp01(_abilityPoints / _pointsToSpecialAttack);
+        float sliderValue = Mathf.Lerp(-_abilityFillerMinValue, _abilityFillerMaxValue, lerpVal);
+        Debug.Log(sliderValue);
+        _specialAbilityCounter.offsetMax = new Vector2(_specialAbilityCounter.offsetMax.x, sliderValue);
     }
 
     // Win conditions:

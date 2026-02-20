@@ -5,5 +5,5 @@ using UnityEngine;
 // Good for scalability
 public interface Entity
 {
-    void Damage();
+    void Damage(bool addPoints = true);
 }

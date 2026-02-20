@@ -7,12 +7,20 @@ public class PlayerController : MonoBehaviour, Entity
 
     [SerializeField] GameObject
         _shotPrefab,
-        _explosionPrefab;
+        _explosionPrefab,
+        _specialAttackShotPrefab;
 
     [SerializeField] float
         _moveSpeed,
         _acceleration,
-        _explosionDuration;
+        _explosionDuration,
+        _specialAttackUpperOffset;
+
+    [SerializeField] int
+        _specialAttackShotsCount;
+
+    [SerializeField] Vector2
+        _specialAttackShotsOffsets;
 
     Vector3 _startingPos;
 
@@ -36,6 +44,7 @@ public class PlayerController : MonoBehaviour, Entity
         GetInput();
         ApplyMovement();
         Shoot();
+        SpecialAttack();
     }
 
     void GetInput()
@@ -44,6 +53,7 @@ public class PlayerController : MonoBehaviour, Entity
         _inputFrame = new();
         _inputFrame.horizontal = _input.Player.Move.ReadValue<Vector2>().x;
         _inputFrame.shootJustPressed = _input.Player.Jump.WasPressedThisFrame();
+        _inputFrame.specialAttackJustPressed = _input.Player.Interact.WasPressedThisFrame();
     }
 
     void ApplyMovement()
@@ -73,7 +83,26 @@ public class PlayerController : MonoBehaviour, Entity
         Instantiate(_shotPrefab, transform.position + Vector3.forward, Quaternion.identity);
     }
 
-    void Entity.Damage()
+    void SpecialAttack()
+    {
+        // If player didn't press special attack or it's not ready, then we don't shoot:
+        if (!_inputFrame.specialAttackJustPressed ||
+            !GameManager.instance.CanUseSpecialAttack) return;
+
+        // We instantiate the shoot prefab many times in slightly different positions:
+        for (int shotIdx = 0; shotIdx < _specialAttackShotsCount; shotIdx++)
+        {
+            Vector3 offset = new Vector3(
+                Random.Range(-_specialAttackShotsOffsets.x, _specialAttackShotsOffsets.x),
+                Random.Range(-_specialAttackShotsOffsets.y, _specialAttackShotsOffsets.y),
+                0) + Vector3.forward + Vector3.up * _specialAttackUpperOffset;
+            Instantiate(_specialAttackShotPrefab, transform.position + offset, Quaternion.identity);
+        }
+
+        GameManager.instance.AbilityUsed();
+    }
+
+    void Entity.Damage(bool addPoints)
     {
         // If the player recieved damage, we create the death particles:
         Destroy(Instantiate(_explosionPrefab, transform.position, Quaternion.identity), _explosionDuration);
@@ -103,6 +132,7 @@ public class PlayerController : MonoBehaviour, Entity
     {
         public float horizontal;
         public bool shootJustPressed;
+        public bool specialAttackJustPressed;
     }
 
     private void OnDestroy()

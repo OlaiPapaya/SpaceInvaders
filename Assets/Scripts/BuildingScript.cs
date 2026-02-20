@@ -14,7 +14,7 @@ public class BuildingScript : MonoBehaviour, Entity
         _startingXsize = transform.localScale.x;
     }
 
-    void Entity.Damage()
+    void Entity.Damage(bool addPoints)
     {
         // When shot at, the building loses a life, and if it's the last one, we call the destroy function:
         _life--;

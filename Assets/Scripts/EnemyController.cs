@@ -25,6 +25,8 @@ public class EnemyController : MonoBehaviour, Entity
     [SerializeField] Color _altColor;
     SpriteRenderer _mySpriteRenderer;
 
+    bool dead = false;
+
     private void Start()
     {
         // Assigning basic variables
@@ -45,7 +47,7 @@ public class EnemyController : MonoBehaviour, Entity
     private void Update()
     {
         // If the enemies arrive to the end and the game isn't over yet, the player loses:
-        if (transform.position.y <= GameManager.instance._enemyWinYposition &&
+        if (transform.position.y <= GameManager.instance.EnemyWinYposition &&
             !GameManager.instance.GameOver) GameManager.instance.EnemiesArrived();
 
         // Just for a cool effect:
@@ -71,10 +73,12 @@ public class EnemyController : MonoBehaviour, Entity
         _mySprite.eulerAngles = new Vector3(0, 0, sinWavePos * _rotationAmount);
     }
 
-    void Entity.Damage()
+    void Entity.Damage(bool addPoints)
     {
+        if (dead) return;
+        dead = true;
         _enemyManagerScript.EnemyDied(); // Increase the speed of the group of enemies
-        GameManager.instance.AddPoints(_pointsWhenKilled);
+        GameManager.instance.AddPoints(_pointsWhenKilled, addPoints);
         // Creating the explosion object and saving it:
         Transform explosion =
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity).GetComponent<SpriteRenderer>().transform;
