@@ -9,7 +9,8 @@ public class EnemyController : MonoBehaviour, Entity
         _waveMovementAmplitude,
         _waveMovementSpeed,
         _waveColumnOffset,
-        _explosionDuration;
+        _explosionDuration,
+        _rotationAmount;
 
     [SerializeField] int _pointsWhenKilled;
     int _columnPosition;
@@ -55,13 +56,19 @@ public class EnemyController : MonoBehaviour, Entity
     {
         if (_mySprite == null) return;
         // Calculating an y position that moves up and down in time and has an offset based on the column.
-        // This gives me a value from 0 to 1 that moves up and down;
-        float wavePos = Mathf.Clamp01(Mathf.Sin(_waveMovementSpeed * (Time.time + _waveColumnOffset * _columnPosition)) / 2 + 0.5f);
-        float yPos = wavePos * _waveMovementAmplitude;
+        float wavePos = Mathf.Cos(_waveMovementSpeed * (Time.time + _waveColumnOffset * _columnPosition));
+        // This gives me a value from 0 to 1 that moves up and down:
+        float wavePos01 = Mathf.Clamp01(wavePos / 2 + 0.5f);
+
+        // Up and down Movement:
+        float yPos = wavePos01 * _waveMovementAmplitude;
         _mySprite.localPosition = new Vector3(0, yPos, 0);
         // Cool color gradient:
         if (_mySpriteRenderer == null) return;
-        _mySpriteRenderer.color = Color.Lerp(_myColor, _altColor, wavePos);
+        _mySpriteRenderer.color = Color.Lerp(_myColor, _altColor, wavePos01);
+        // Rotation --- I KNOW pixel art shouldn't be rotated, but I wanted to see if I could do this:
+        float sinWavePos = -Mathf.Sin(_waveMovementSpeed * (Time.time + _waveColumnOffset * _columnPosition));
+        _mySprite.eulerAngles = new Vector3(0, 0, sinWavePos * _rotationAmount);
     }
 
     void Entity.Damage()

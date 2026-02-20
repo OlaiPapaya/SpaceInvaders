@@ -104,4 +104,9 @@ public class PlayerController : MonoBehaviour, Entity
         public float horizontal;
         public bool shootJustPressed;
     }
+
+    private void OnDestroy()
+    {
+        _input.Player.Disable();
+    }
 }

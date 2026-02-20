@@ -3,6 +3,7 @@ using UnityEngine;
 public class BuildingScript : MonoBehaviour, Entity
 {
     [SerializeField] private int _startingLife;
+    [SerializeField] GameObject _deathParticles;
     private int _life;
     private float _startingXsize;
 
@@ -29,6 +30,7 @@ public class BuildingScript : MonoBehaviour, Entity
     void BuildingDestroyed()
     {
         // When destroyed, we just add some particles and erase the building:
+        Instantiate(_deathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }
