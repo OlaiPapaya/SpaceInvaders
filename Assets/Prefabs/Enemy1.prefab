@@ -159,10 +159,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _explosionPrefab: {fileID: 7918985451568617930, guid: 95b0689df03c8094ea577d2ecfe30550, type: 3}
   _waveMovementAmplitude: 0.15
-  _waveMovementSpeed: 3
+  _waveMovementSpeed: 4
   _waveColumnOffset: 0.3
   _explosionDuration: 0.1
   _pointsWhenKilled: 20
+  _altColor: {r: 1, g: 0.28773582, b: 0.8306201, a: 1}
 --- !u!61 &1326388728758407205
 BoxCollider2D:
   m_ObjectHideFlags: 0

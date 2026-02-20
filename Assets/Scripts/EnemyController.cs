@@ -18,15 +18,18 @@ public class EnemyController : MonoBehaviour, Entity
     EnemyManager _enemyManagerScript;
     public EnemyManager ManagerScript { set { _enemyManagerScript = value; } }
 
-    private Transform mySprite;
-    private Color myColor = Color.white;
+    private Transform _mySprite;
+    private Color _myColor = Color.white;
+
+    [SerializeField] Color _altColor;
+    SpriteRenderer _mySpriteRenderer;
 
     private void Start()
     {
         // Assigning basic variables
-        mySprite = transform.GetChild(0).transform;
-        SpriteRenderer mySpriteRenderer = mySprite.GetComponent<SpriteRenderer>();
-        if (mySpriteRenderer != null ) myColor = mySpriteRenderer.color;
+        _mySprite = transform.GetChild(0).transform;
+        _mySpriteRenderer = _mySprite.GetComponent<SpriteRenderer>();
+        if (_mySpriteRenderer != null ) _myColor = _mySpriteRenderer.color;
     }
 
     private void OnTriggerEnter2D(Collider2D other)
@@ -50,10 +53,15 @@ public class EnemyController : MonoBehaviour, Entity
 
     void VerticalWaveMovement()
     {
-        if (mySprite == null) return;
-        // Calculating an y position that moves up and down in time and has an offset based on the column:
-        float yPos = Mathf.Sin(_waveMovementSpeed * (Time.time + _waveColumnOffset * _columnPosition)) * _waveMovementAmplitude;
-        mySprite.localPosition = new Vector3(0, yPos, 0);
+        if (_mySprite == null) return;
+        // Calculating an y position that moves up and down in time and has an offset based on the column.
+        // This gives me a value from 0 to 1 that moves up and down;
+        float wavePos = Mathf.Clamp01(Mathf.Sin(_waveMovementSpeed * (Time.time + _waveColumnOffset * _columnPosition)) / 2 + 0.5f);
+        float yPos = wavePos * _waveMovementAmplitude;
+        _mySprite.localPosition = new Vector3(0, yPos, 0);
+        // Cool color gradient:
+        if (_mySpriteRenderer == null) return;
+        _mySpriteRenderer.color = Color.Lerp(_myColor, _altColor, wavePos);
     }
 
     void Entity.Damage()
@@ -64,7 +72,7 @@ public class EnemyController : MonoBehaviour, Entity
         Transform explosion =
             Instantiate(_explosionPrefab, transform.position, Quaternion.identity).GetComponent<SpriteRenderer>().transform;
         SpriteRenderer explosionSprite = explosion.GetComponent<SpriteRenderer>();
-        if (explosionSprite != null) explosionSprite.color = myColor; // Changing its color to the enemy color
+        if (explosionSprite != null) explosionSprite.color = _myColor; // Changing its color to the enemy color
         Destroy(explosionSprite, _explosionDuration); // And destroying it after some time
         Destroy(gameObject);
     }

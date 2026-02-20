@@ -1,5 +1,6 @@
 using UnityEngine;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -8,6 +9,11 @@ public class GameManager : MonoBehaviour
     [SerializeField] TMP_Text
         _lifesText,
         _pointsText;
+
+    [SerializeField]
+    GameObject
+        _winPanel,
+        _losePanel;
 
     private bool _gameOver;
     public bool GameOver { get => _gameOver; }
@@ -47,7 +53,7 @@ public class GameManager : MonoBehaviour
     public void EnemiesDefeated()
     {
         _gameOver = true;
-        Debug.Log("You win!");
+        _winPanel.SetActive(true);
     }
 
     // Lose conditions:
@@ -55,12 +61,26 @@ public class GameManager : MonoBehaviour
     public void EnemiesArrived()
     {
         _gameOver = true;
-        Debug.Log("You lose! Enemies arrived!");
+        _losePanel.SetActive(true);
     }
 
     private void PlayerDied()
     {
         _gameOver = true;
-        Debug.Log("You lose! Player died!");
+        _losePanel.SetActive(true);
+        TMP_Text loseReason = _losePanel.transform.Find("Subtitle").GetComponent<TMP_Text>();
+        if (loseReason != null) loseReason.text = "You lost all lifes!";
+    }
+
+    // Main Buttons:
+
+    public void RestartGame()
+    {
+        SceneManager.LoadScene("SampleScene");
+    }
+
+    public void ExitGame()
+    {
+        Application.Quit();
     }
 }

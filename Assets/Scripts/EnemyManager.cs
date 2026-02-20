@@ -142,6 +142,5 @@ public class EnemyManager : MonoBehaviour
     {
         // Make the player win:
         GameManager.instance.EnemiesDefeated();
-        Debug.Log("You Win!");
     }
 }
