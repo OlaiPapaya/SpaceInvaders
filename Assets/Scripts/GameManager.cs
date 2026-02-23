@@ -13,7 +13,8 @@ public class GameManager : MonoBehaviour
     [SerializeField]
     GameObject
         _winPanel,
-        _losePanel;
+        _losePanel,
+        _specialAbilityMarker;
 
     [SerializeField] RectTransform
         _specialAbilityCounter;
@@ -85,10 +86,12 @@ public class GameManager : MonoBehaviour
     void UpdateAbilityCounter()
     {
         if (_specialAbilityCounter == null) return;
-        float lerpVal = Mathf.Clamp01(_abilityPoints / _pointsToSpecialAttack);
+        float lerpVal = Mathf.Clamp01((float)_abilityPoints / _pointsToSpecialAttack);
         float sliderValue = Mathf.Lerp(-_abilityFillerMinValue, _abilityFillerMaxValue, lerpVal);
         Debug.Log(sliderValue);
         _specialAbilityCounter.offsetMax = new Vector2(_specialAbilityCounter.offsetMax.x, sliderValue);
+        if (_specialAbilityMarker == null) return;
+        _specialAbilityMarker.SetActive(lerpVal >= 1);
     }
 
     // Win conditions:
