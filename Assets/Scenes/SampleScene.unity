@@ -11563,7 +11563,7 @@ MonoBehaviour:
   _speed: 0.5
   _leapDown: 0.3
   _cooldownTime: 0.5
-  _speedIncreasPerDeath: 0.05
+  _speedIncreasPerDeath: 0.065
   _enemyShootCooldown: 1
   _enemyRowDelayTime: 0.2
   _shotPrefab: {fileID: 1057323371429796348, guid: 5de4c2e460050944ca1bc49277f1d398, type: 3}
@@ -12206,7 +12206,6 @@ GameObject:
   m_Component:
   - component: {fileID: 870866654}
   - component: {fileID: 870866653}
-  - component: {fileID: 870866655}
   - component: {fileID: 870866656}
   m_Layer: 0
   m_Name: LeftCorner
@@ -12259,7 +12258,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 10}
+  m_Size: {x: 3, y: 10}
   m_EdgeRadius: 0
 --- !u!4 &870866654
 Transform:
@@ -12276,19 +12275,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &870866655
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 870866652}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee05e3bec60916c4c8486f09b337601c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRight: 0
 --- !u!50 &870866656
 Rigidbody2D:
   serializedVersion: 5
@@ -13092,7 +13078,6 @@ GameObject:
   m_Component:
   - component: {fileID: 1434351611}
   - component: {fileID: 1434351610}
-  - component: {fileID: 1434351612}
   - component: {fileID: 1434351613}
   m_Layer: 0
   m_Name: RightCorner
@@ -13145,7 +13130,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 10}
+  m_Size: {x: 3, y: 10}
   m_EdgeRadius: 0
 --- !u!4 &1434351611
 Transform:
@@ -13162,19 +13147,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1434351612
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1434351609}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ee05e3bec60916c4c8486f09b337601c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  isRight: 1
 --- !u!50 &1434351613
 Rigidbody2D:
   serializedVersion: 5
