@@ -15,6 +15,8 @@ public class Shot : MonoBehaviour
         _damageShots,
         _killedEnemyPointsAffectAbility;
 
+    bool _used;
+
     private void Start()
     {
         // Destroying the shot after a cooldown:
@@ -33,8 +35,13 @@ public class Shot : MonoBehaviour
         if (other.CompareTag("Player") && !_damagePlayer ||
             other.CompareTag("Enemy") && !_damageEnemies ||
             other.CompareTag("Building") && !_damageBuildings ||
-            other.CompareTag("Shot") && !_damageShots) return;
+            other.CompareTag("Shot") && !_damageShots ||
+            other.CompareTag("EnemyWinZone") ||
+            _used) return;
         Destroy(gameObject);
+
+        // Sometimes one shot triggers multiple destructions. We make sure it doesn't this way:
+        _used = true;
 
         // If an object can be damaged, it will have the interface 'Entity':
         Entity targetEntity = other.GetComponent<Entity>();

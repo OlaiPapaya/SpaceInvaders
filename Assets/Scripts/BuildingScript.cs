@@ -4,8 +4,9 @@ public class BuildingScript : MonoBehaviour, Entity
 {
     [SerializeField] private int _startingLife;
     [SerializeField] GameObject _deathParticles;
-    private int _life;
     private float _startingXsize;
+    private int _life;
+    bool _dead;
 
     private void Awake()
     {
@@ -29,8 +30,12 @@ public class BuildingScript : MonoBehaviour, Entity
 
     void BuildingDestroyed()
     {
+        // Sometimes the death function is called many times before the obj is destroyed,
+        // so we make sure it's only called once:
+        if (_dead) return;
+        _dead = true;
         // When destroyed, we just add some particles and erase the building:
-        Instantiate(_deathParticles, transform.position, Quaternion.identity);
+        if (_deathParticles != null) Instantiate(_deathParticles, transform.position, Quaternion.identity);
         Destroy(gameObject);
     }
 }

@@ -9,6 +9,7 @@ TagManager:
   - Enemy
   - Building
   - Shot
+  - EnemyWinZone
   layers:
   - Default
   - TransparentFX

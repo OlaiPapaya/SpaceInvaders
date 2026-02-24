@@ -26,13 +26,9 @@ public class GameManager : MonoBehaviour
         _abilityFillerMinValue;
 
     private bool _gameOver;
-    public bool GameOver { get => _gameOver; }
-
-    [SerializeField] float
-        _enemyWinYposition;
+    public bool GameOver => _gameOver;
 
     float _abilityFillerMaxValue;
-    public float EnemyWinYposition { get { return _enemyWinYposition; } }
 
     [SerializeField] private ushort _startLifes;
     private ushort _lifes;

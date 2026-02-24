@@ -46,10 +46,6 @@ public class EnemyController : MonoBehaviour, Entity
 
     private void Update()
     {
-        // If the enemies arrive to the end and the game isn't over yet, the player loses:
-        if (transform.position.y <= GameManager.instance.EnemyWinYposition &&
-            !GameManager.instance.GameOver) GameManager.instance.EnemiesArrived();
-
         // Just for a cool effect:
         VerticalWaveMovement();
     }
@@ -75,6 +71,8 @@ public class EnemyController : MonoBehaviour, Entity
 
     void Entity.Damage(bool addPoints)
     {
+        // Sometimes the death function is called many times before the obj is destroyed,
+        // so we make sure it's only called once:
         if (dead) return;
         dead = true;
         _enemyManagerScript.EnemyDied(); // Increase the speed of the group of enemies
