@@ -8,7 +8,8 @@ public class GameManager : MonoBehaviour
 
     [SerializeField] TMP_Text
         _lifesText,
-        _pointsText;
+        _pointsText,
+        _losePanelSubtitle;
 
     [SerializeField]
     GameObject
@@ -58,7 +59,7 @@ public class GameManager : MonoBehaviour
     public void LoseLife()
     {
         _lifes--;
-        _lifesText.text = _lifes.ToString();
+        if (_lifesText != null) _lifesText.text = _lifes.ToString();
         if (_lifes <= 0) PlayerDied();
     }
 
@@ -70,7 +71,7 @@ public class GameManager : MonoBehaviour
             _abilityPoints += addedPoints;
             UpdateAbilityCounter();
         }
-        _pointsText.text = _points.ToString();
+        if (_pointsText != null) _pointsText.text = _points.ToString();
     }
 
     public void AbilityUsed()
@@ -94,7 +95,7 @@ public class GameManager : MonoBehaviour
     public void EnemiesDefeated()
     {
         _gameOver = true;
-        _winPanel.SetActive(true);
+        if (_winPanel != null) _winPanel.SetActive(true);
     }
 
     // Lose conditions:
@@ -102,15 +103,14 @@ public class GameManager : MonoBehaviour
     public void EnemiesArrived()
     {
         _gameOver = true;
-        _losePanel.SetActive(true);
+        if (_losePanel != null) _losePanel.SetActive(true);
     }
 
     private void PlayerDied()
     {
         _gameOver = true;
-        _losePanel.SetActive(true);
-        TMP_Text loseReason = _losePanel.transform.Find("Subtitle").GetComponent<TMP_Text>();
-        if (loseReason != null) loseReason.text = "You lost all lifes!";
+        if (_losePanel != null) _losePanel.SetActive(true);
+        if (_losePanelSubtitle != null) _losePanelSubtitle.text = "You lost all lifes!";
     }
 
     // Main Buttons:

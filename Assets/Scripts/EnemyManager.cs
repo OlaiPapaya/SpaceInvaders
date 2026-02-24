@@ -16,7 +16,7 @@ public class EnemyManager : MonoBehaviour
 
     [SerializeField] GameObject
         _shotPrefab,
-        _enemyRow;
+        _enemyRowPrefab;
 
     [SerializeField] List<GameObject> _enemiesPerRow = new();
 
@@ -32,12 +32,15 @@ public class EnemyManager : MonoBehaviour
 
     bool _goingRight = true;
 
+    List<EnemyGroupController> _enemyRows = new();
+
     private void Awake()
     {
         // Assigning basic variables
         _rows = _enemiesPerRow.Count;
         _enemyNum = _rows * _columns;
         FillEnemies(); // Creating all the enemies
+        RowScriptsSaving();
     }
 
     void FillEnemies()
@@ -45,7 +48,7 @@ public class EnemyManager : MonoBehaviour
         // Fill the enemies based on the number of rows and columns, and the spacing between them:
         for (int rowIdx = 0; rowIdx < _rows; rowIdx++)
         {
-            Transform newGroup = Instantiate(_enemyRow, transform).transform;
+            Transform newGroup = Instantiate(_enemyRowPrefab, transform).transform;
             {
                 EnemyGroupController newGroupScript = newGroup.GetComponent<EnemyGroupController>();
                 if (newGroupScript != null)
@@ -69,6 +72,14 @@ public class EnemyManager : MonoBehaviour
                     newEnemyScript.ColumnPosition = colIdx;
                 }
             }
+        }
+    }
+
+    void RowScriptsSaving()
+    {
+        for (int rowIdx = 0; rowIdx < _rows; rowIdx++)
+        {
+            _enemyRows.Add(transform.GetChild(rowIdx).GetComponent<EnemyGroupController>());
         }
     }
 
@@ -107,16 +118,15 @@ public class EnemyManager : MonoBehaviour
         // One for one, the rows will move down:
         for (int childIdx = transform.childCount - 1; childIdx >= 0; childIdx--)
         {
-            Transform row = transform.GetChild(childIdx);
+            if (childIdx >= _enemyRows.Count) break; // _enemyRows isn't complete.
+            if (_enemyRows[childIdx] == null) continue; // Row script has not been correclty assigned.
             // If this row doesn't contain any enemies, we don't want the delayed effect on it:
-            if (row.childCount == 0) continue;
-            row.position += Vector3.down * _leapDown; // Move enemies down
+            if (_enemyRows[childIdx].transform.childCount == 0) continue;
 
-            // Thelling the enemy group to change direction:
-            EnemyGroupController rowScript = transform.GetChild(childIdx).GetComponent<EnemyGroupController>();
-            if (rowScript != null) rowScript.GoingRight = _goingRight;
+            _enemyRows[childIdx].transform.position += Vector3.down * _leapDown; // Move enemies down.
+            _enemyRows[childIdx].GoingRight = _goingRight; // Telling the enemy group to change direction.
 
-            yield return new WaitForSeconds(_enemyRowDelayTime / _speed); // Wait the time
+            yield return new WaitForSeconds(_enemyRowDelayTime / _speed); // Wait the time.
         }
     }
 

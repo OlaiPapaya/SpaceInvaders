@@ -227,6 +227,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _lifesText: {fileID: 2078237419}
   _pointsText: {fileID: 1160489082}
+  _losePanelSubtitle: {fileID: 736658244}
   _winPanel: {fileID: 1820339484}
   _losePanel: {fileID: 242623624}
   _specialAbilityMarker: {fileID: 1445815326}
@@ -11566,7 +11567,7 @@ MonoBehaviour:
   _enemyShootCooldown: 1
   _enemyRowDelayTime: 0.2
   _shotPrefab: {fileID: 1057323371429796348, guid: 5de4c2e460050944ca1bc49277f1d398, type: 3}
-  _enemyRow: {fileID: 1051854350225039153, guid: 92f5eec30a30d394a9caa9ec76fe99e2, type: 3}
+  _enemyRowPrefab: {fileID: 1051854350225039153, guid: 92f5eec30a30d394a9caa9ec76fe99e2, type: 3}
   _enemiesPerRow:
   - {fileID: 3545084907876958021, guid: 9d5cfab9daa09cf4c932d413d34fffe7, type: 3}
   - {fileID: 5237578999175568646, guid: ed83e25af423b6f40bb394fefb50a732, type: 3}
