@@ -26,6 +26,10 @@ public class GameManager : MonoBehaviour
     [SerializeField] float
         _abilityFillerMinValue;
 
+    [SerializeField] AudioSource
+        _loseAudioSource,
+        _winAudioSource;
+
     private bool _gameOver;
     public bool GameOver => _gameOver;
 
@@ -94,23 +98,29 @@ public class GameManager : MonoBehaviour
     // Win conditions:
     public void EnemiesDefeated()
     {
+        if (_gameOver) return;
         _gameOver = true;
         if (_winPanel != null) _winPanel.SetActive(true);
+        if (_winAudioSource != null) _winAudioSource.Play();
     }
 
     // Lose conditions:
 
     public void EnemiesArrived()
     {
+        if (_gameOver) return;
         _gameOver = true;
         if (_losePanel != null) _losePanel.SetActive(true);
+        if (_loseAudioSource != null) _loseAudioSource.Play();
     }
 
     private void PlayerDied()
     {
+        if (_gameOver) return;
         _gameOver = true;
         if (_losePanel != null) _losePanel.SetActive(true);
         if (_losePanelSubtitle != null) _losePanelSubtitle.text = "You lost all lifes!";
+        if (_loseAudioSource != null) _loseAudioSource.Play();
     }
 
     // Main Buttons:
